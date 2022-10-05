@@ -1,18 +1,18 @@
 
-var bkImage;
+//var bkImage;
 
 function preload()
 {
-    bkImage = loadImage("img/bk.jpg");    
+    //bkImage = loadImage("img/bk.jpg");    
 }
 
 function setup()
 {
-    createCanvas(bkImage.width, bkImage.height);
+    createCanvas(800,1200);
 
     var mgr = new SceneManager();
-    mgr.bkImage = bkImage; // inject bkImage property
-    mgr.bkImage2 = bkImage; // inject bkImage property
+    //mgr.bkImage = bkImage; // inject bkImage property
+    //mgr.bkImage2 = bkImage; // inject bkImage property
     mgr.wire();
-    mgr.showScene( Intro );
+    mgr.showScene( Select );
 }
