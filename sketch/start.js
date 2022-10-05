@@ -12,6 +12,7 @@ function setup()
 
     var mgr = new SceneManager();
     mgr.bkImage = bkImage; // inject bkImage property
+    mgr.bkImage2 = bkImage; // inject bkImage property
     mgr.wire();
     mgr.showScene( Intro );
 }
