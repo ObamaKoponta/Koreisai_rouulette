@@ -9,13 +9,16 @@ function Select()
 
     this.draw = function()
     {
-        textSize(64);
+        background(40);
+        fill(230);
+        textSize(20);
         textAlign(CENTER);
-        fill("black");
-        text("選択画面",200,100);
+        text("選択画面(クリックすると画面が変わる)",200,100);
     }
     this.keyPressed = function()
     {
+    }
+    this.mousePressed = function(){
         this.sceneManager.showScene( Roulette );
     }
 }
