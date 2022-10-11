@@ -1,18 +1,17 @@
 
-//var bkImage;
+var goldenTexture;
 
 function preload()
 {
-    //bkImage = loadImage("img/bk.jpg");    
+    goldenTexture = loadImage("./img/gold.png");
 }
 
 function setup()
 {
-    createCanvas(800,1200);
+    createCanvas(displayWidth,displayHeight,P2D);
 
     var mgr = new SceneManager();
-    //mgr.bkImage = bkImage; // inject bkImage property
-    //mgr.bkImage2 = bkImage; // inject bkImage property
+    mgr.goldenTexture = goldenTexture;
     mgr.wire();
     mgr.showScene( Select );
 }
