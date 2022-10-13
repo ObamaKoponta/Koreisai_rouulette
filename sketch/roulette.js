@@ -5,17 +5,23 @@ function Roulette()
     let luckyY = 450;
     let luckyTextSize = 256;
     let titleText = "工嶺祭抽選会";
+    let selected = "";
+    let stopped = false;
+    let button1;
     
-    let drawingList = ["19415","19319","20312","34155","20014"];
+    let drawingList = [];
     
-    this.setup = function(){
-        textAlign(CENTER,CENTER);
-        setRandomList();
-        button1 = new Button(width/2,stopButtonY,600,100,"ストップ！");
+    this.enter = function(){
+        setDrawingList();
+        selected="";
     }
 
     this.draw = function()
     {
+        if(selected==""){
+            setWinner();
+        }
+
         resizeCanvas(windowWidth-10, windowHeight-10);
         clear();
         background(10);
@@ -23,41 +29,20 @@ function Roulette()
         drawRoulette();
         cursorEffects();
         drawEffects();
-        button1.x = width/2;
-        button1.draw();
-        button1.update();
     }
 
     function drawTitle(){
-        textSize(96);
+        textSize(128);
         fill(255);
-        let gradientStroke = drawingContext.createLinearGradient(
-            width*0.4,
-            0,
-            width*0.6,
-            200
-        );
-
-        gradientStroke.addColorStop(0, color(255, 0, 255));
-        gradientStroke.addColorStop(0.25, color(0, 255, 0));
-        gradientStroke.addColorStop(0.5, color(255, 255, 0));
-        gradientStroke.addColorStop(0.75, color(255, 255, 255));
-        gradientStroke.addColorStop(0.825, color(255, 0, 255));
-        gradientStroke.addColorStop(1, color(0, 255, 255));
-        drawingContext.strokeStyle = gradientStroke;
-        drawingContext.fillStyle = gradientStroke;
-        textAlign(CENTER,CENTER);
-        text(titleText,width/2,titleY);
+        push();
+            textAlign(CENTER,CENTER);
+            text(titleText,width/2,titleY);
+        pop();
     }
 
     function drawRoulette(){
-        selected = random(drawingList);
-        textAlign(CENTER,CENTER);
-        textSize(luckyTextSize);
-        //texture(this.sceneManager.goldenTexture);
-        //textureMode(NORMAL);
-        fill(220,220,10);
         push();
+            /*
             drawingContext.shadowBlur = 20;
             drawingContext.shadowColor = color(255, 255, 0);
             drawingContext.shadowOffsetX = 5;
@@ -72,23 +57,75 @@ function Roulette()
             let step = 13;
             for(let i=0;i<step;i+=2){
                 let d = 1.0/step;
-                gradientStroke.addColorStop(d*i, color(255, 255, 50));
+                gradientStroke.addColorStop(d*i, color(245, 245, 50));
                 gradientStroke.addColorStop(d*i+d, color(70));
             }
             drawingContext.strokeStyle = gradientStroke;
             drawingContext.fillStyle = gradientStroke;
-            text(selected,width/2,luckyY);
+            */
+            textAlign(CENTER,CENTER);
+            textSize(luckyTextSize);
+            fill(220,220,10);
+            if(stopped){
+                text(selected,width/2,luckyY);
+            }else{
+                randomDraw = random(drawingList);
+                text(randomDraw,width/2,luckyY);
+            }
         pop();
     }
 
-    function setRandomList(){
-        for(let i=0;i<200;i++){
-            drawingList.push(int(random(500)+18000));
+    function setDrawingList(){
+        drawingList = [];
+        students.forEach(function(e){
+            drawingList.push(e); 
+        });
+    }
+
+    this.mousePressed = function()
+    {
+    }
+
+    this.keyPressed = function(){
+        if(keyCode == 13){//エンター
+            rouletteStop();
+        }
+        if(keyCode == 82){ //rキー
+            rouletteStart();
+        }
+        if(keyCode == 83){ //sキー
+            this.sceneManager.showScene( Select );
         }
     }
 
-    this.keyPressed = function()
-    {
-        
+    function setWinner(){
+        selected = random(drawingList);
+        drawingList.splice(drawingList.indexOf(selected),1);
+        stopped = false;
+        console.log(drawingList);
+    }
+
+    function rouletteStop(){
+        if(!stopped){
+            winners.push(selected);
+            stopped = true;
+            downloadWinners();
+        }
+    }
+
+    function rouletteStart(){
+        selected = "";
+    }
+
+    function downloadWinners(){//当選者一覧をダウンロードする
+        let text = "";
+        winners.forEach(function(e){
+            text += e + "\n";
+        });
+        const blob = new Blob([text],{type:"text/plain"});
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'winners.csv';
+        link.click();
     }
 }

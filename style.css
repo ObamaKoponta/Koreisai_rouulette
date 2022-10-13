@@ -1,0 +1,22 @@
+div {
+  user-select: none /* 選択を禁止する */
+}
+
+
+html,body{
+  overflow: hidden
+}
+
+
+.hidden {
+  display: none;
+}
+
+#canvas{
+  position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}

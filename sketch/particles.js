@@ -8,7 +8,7 @@ function cursorEffects(){
 }
 
 function buttonEffects(x,y){
-    particles.push(createParticleFall(x,y));
+    //particles.push(createParticleFall(x,y));
 }
 
 function createParticleFall(x, y) {
@@ -41,7 +41,7 @@ function drawEffects(){
 
 function createParticle(x, y) {
     let direction = random(TWO_PI);
-    let speed = 3;
+    let speed = 4;
     return {
         type: 0,
         x,
@@ -58,7 +58,7 @@ function createParticle(x, y) {
 }
 
 function particleIsAlive(particle) {
-    return particle.life > 0;
+    return particle.life > 0 && particle.x >= -100 && particle.x <= width + 100 && particle.y >= -100 && particle.y <= height + 100;
 }
 
 function updatePosition(particle) {
@@ -74,10 +74,16 @@ function decreaseLife(particle) {
 
 function drawParticle(particle) {
     push();
-    noStroke();
-    fill(particle.r,particle.g,particle.b, particle.life * 255);
     translate(particle.x, particle.y);
     rotate(frameCount / 10.0);
-    square(0,0, particle.life * 10);
+    strokeWeight(1);
+    fill(255);
+    noStroke();
+    drawingContext.shadowBlur = 20;
+    drawingContext.fillStyle = color(particle.r,particle.g,particle.b, particle.life * 255);
+    drawingContext.shadowColor = color(255,255,100);
+    drawingContext.shadowOffsetX = 5;
+    drawingContext.shadowOffsetY = 5;
+    circle(0,0, particle.life * 20);
     pop();
 }

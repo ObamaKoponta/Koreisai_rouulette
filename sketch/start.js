@@ -1,5 +1,8 @@
 
+let students = []; // 学籍番号入れるよう
+let winners = [];// 当選者一覧
 var goldenTexture;
+let reg = false;
 
 function preload()
 {
@@ -8,8 +11,8 @@ function preload()
 
 function setup()
 {
-    createCanvas(displayWidth,displayHeight,P2D);
-
+    let canvas = createCanvas(900,600,P2D);
+    canvas.parent('canvas');
     var mgr = new SceneManager();
     mgr.goldenTexture = goldenTexture;
     mgr.wire();

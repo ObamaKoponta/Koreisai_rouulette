@@ -13,6 +13,41 @@ class Button{
         //translate(-width/2,-height/2);
         stroke(0);
         textAlign(CENTER,CENTER);
+        push();
+        /*
+            drawingContext.shadowBlur = 20;
+            drawingContext.shadowColor = color(230,0,255);
+            drawingContext.shadowOffsetX = 5;
+            drawingContext.shadowOffsetY = 5;
+            let gradientStroke = drawingContext.createLinearGradient(
+                width*0.2,
+                0,
+                width*0.8,
+                200
+            );
+
+            gradientStroke.addColorStop(0, color(255, 100, 100));
+            //gradientStroke.addColorStop(0.25, color(0, 255, 0));
+            gradientStroke.addColorStop(0.5, color(100, 255, 100));
+            //gradientStroke.addColorStop(0.75, color(255, 0, 0));
+            gradientStroke.addColorStop(1, color(100, 100, 255));
+            drawingContext.strokeStyle = gradientStroke;
+            let gradientFill = drawingContext.createLinearGradient(
+                width*0.2,
+                0,
+                width*0.8,
+                200
+            );
+            strokeWeight(10);
+            colorMode(HSB);
+            gradientFill.addColorStop(1.0, color(255, 100, 100,1));
+            //gradientStroke.addColorStop(0.25, color(0, 255, 0));
+            gradientFill.addColorStop(0.5, color(100, 255, 100,1));
+            //gradientStroke.addColorStop(0.75, color(255, 0, 0));
+            gradientFill.addColorStop(0.0, color(100, 100, 255,1));
+            drawingContext.strokeStyle = gradientStroke;
+            drawingContext.fillStyle = gradientFill;
+        */
         if(this.mouseOver){
             fill(230,230,10);
             let streach = 10;
@@ -27,6 +62,7 @@ class Button{
             textSize(this.h);
             text(this.text,this.x,this.y);
         }
+        pop();
     }
     update(){
         if(mouseX>this.x-this.w/2 && mouseX<this.x+this.w/2 && mouseY>this.y-this.h/2 && mouseY<this.y+this.h/2){
@@ -43,21 +79,17 @@ class Button{
     }
 }
 
-function Select()
-{
-
-
-    this.setup = function()
+function Select(){
+    let button1,button2,button3;
+    this.enter = function()
     {
-        button1 = new Button(width/4*1,100,250,100,"抽選");
-        button2 = new Button(width/4*2,100,250,100,"履歴");
-        button3 = new Button(width/4*3,100,250,100,"CSV");
+        button1 = new Button(width/4,100,250,100,"抽選");
+        button2 = new Button(width/4,300,250,100,"除外");
+        button3 = new Button(width/4,500,250,100,"登録");
     }
 
-    this.draw = function()
-    {
-        resizeCanvas(windowWidth, windowHeight);
-        console.log(particles.length);
+    this.draw = function(){
+        clear();
         cursor(ARROW);
         background(40);
         fill(230);
@@ -73,12 +105,31 @@ function Select()
         button2.update();
         button3.draw();
         button3.update();
+        if(reg){
+            text("データ登録済み",width/4,600);
+        }
     }
-    this.keyPressed = function()
-    {
+    this.keyPressed = function(){
     }
     this.mousePressed = function(){
-        this.sceneManager.showScene( Roulette );
+        if(button3.mouseOver){
+            loadCsvData();
+        }else if(button1.mouseOver){
+            if(reg && students.length>0){
+                this.sceneManager.showScene( Roulette );
+            }else{
+                alert("データを登録してください");
+            }
+        }
     }
 }
+
+async function loadCsvData(){
+    const file = await showOpenFileDialog();
+    console.log(file);
+    const content = await readAsText(file);
+    students = [];
+    convertCSVtoArray(content,students);
+    reg = true;
+};
 
