@@ -1,19 +1,20 @@
 function Roulette()
 {
     let titleY = 150;
-    let stopButtonY = 800;
     let luckyY = 450;
     let luckyTextSize = 256;
     let titleText = "工嶺祭抽選会";
     let selected = "";
     let stopped = false;
-    let button1;
+    let special = false;
+    let zanzo = 0;
     
     let drawingList = [];
     
     this.enter = function(){
         setDrawingList();
         selected="";
+        special = false;
     }
 
     this.draw = function()
@@ -25,16 +26,40 @@ function Roulette()
         resizeCanvas(windowWidth-10, windowHeight-10);
         clear();
         background(10);
-        drawTitle();
-        drawRoulette();
         cursorEffects();
         drawEffects();
+        drawTitle();
+        drawRoulette();
     }
 
     function drawTitle(){
         textSize(128);
         fill(255);
         push();
+            if(special){
+                fill(255);
+                stroke(255,255,0);
+                strokeWeight(1);
+                drawingContext.shadowBlur = 10;
+                drawingContext.shadowColor = color(255, 255, 0);
+                drawingContext.shadowOffsetX = 5;
+                drawingContext.shadowOffsetY = 5;
+                let gradientStroke = drawingContext.createLinearGradient(
+                    0,
+                    height,
+                    width,
+                    0
+                );
+                
+                for(let i=0;i<=0.9;i+=0.2){
+                    gradientStroke.addColorStop(i+0.0, color(255, 0, 0));
+                    gradientStroke.addColorStop(i+0.067, color(0, 255, 0));
+                    gradientStroke.addColorStop(i+0.133, color(0, 0, 255));
+                }
+                
+                drawingContext.strokeStyle = gradientStroke;
+                drawingContext.fillStyle = gradientStroke;
+            }
             textAlign(CENTER,CENTER);
             text(titleText,width/2,titleY);
         pop();
@@ -42,32 +67,49 @@ function Roulette()
 
     function drawRoulette(){
         push();
-            /*
-            drawingContext.shadowBlur = 20;
-            drawingContext.shadowColor = color(255, 255, 0);
-            drawingContext.shadowOffsetX = 5;
-            drawingContext.shadowOffsetY = 5;
-            let gradientStroke = drawingContext.createLinearGradient(
-                0,
-                height,
-                width,
-                0
-            );
-            
-            let step = 13;
-            for(let i=0;i<step;i+=2){
-                let d = 1.0/step;
-                gradientStroke.addColorStop(d*i, color(245, 245, 50));
-                gradientStroke.addColorStop(d*i+d, color(70));
-            }
-            drawingContext.strokeStyle = gradientStroke;
-            drawingContext.fillStyle = gradientStroke;
-            */
+            if(special){
+                fill(255);
+                stroke(255,255,0);
+                strokeWeight(3);
+                drawingContext.shadowBlur = 30;
+                drawingContext.shadowColor = color(255, 255, 0);
+                drawingContext.shadowOffsetX = 10;
+                drawingContext.shadowOffsetY = 10;
+                let gradientStroke = drawingContext.createLinearGradient(
+                    0,
+                    height,
+                    width,
+                    0
+                );
+                
+                let step = 13;
+                for(let i=0;i<step;i+=2){
+                    let d = 1.0/step;
+                    gradientStroke.addColorStop(d*i, color(245, 245, 50));
+                    gradientStroke.addColorStop(d*i+d, color(70));
+                }
+                drawingContext.strokeStyle = gradientStroke;
+                drawingContext.fillStyle = gradientStroke;
+            }else{
+                noStroke();
+                fill(230,230,10);
+            }  
             textAlign(CENTER,CENTER);
             textSize(luckyTextSize);
-            fill(220,220,10);
+
             if(stopped){
-                text(selected,width/2,luckyY);
+                if(zanzo>0){
+                    zanzo--;
+                    translate(width/2,luckyY);
+                    scale(1.0+zanzo*0.05);
+                    text(selected,0,0);
+                    scale(2.5-zanzo*0.2);
+                    stroke(255,255,10,zanzo*10);
+                    fill(230,230,10,zanzo*10);
+                    text(selected,0,0);
+                }else{
+                    text(selected,width/2,luckyY);
+                }
             }else{
                 randomDraw = random(drawingList);
                 text(randomDraw,width/2,luckyY);
@@ -99,6 +141,12 @@ function Roulette()
         if(keyCode == 83){ //sキー
             this.sceneManager.showScene( Select );
         }
+        if(keyCode == 84){ //tキー
+            special = !special;
+        }
+        if(keyCode == 68){ //dキー
+            downloadWinners();
+        }
     }
 
     function setWinner(){
@@ -110,9 +158,9 @@ function Roulette()
 
     function rouletteStop(){
         if(!stopped){
+            zanzo = 10;
             winners.push(selected);
             stopped = true;
-            downloadWinners();
         }
     }
 
