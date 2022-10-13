@@ -78,7 +78,10 @@ function Roulette()
     function setDrawingList(){
         drawingList = [];
         students.forEach(function(e){
-            drawingList.push(e); 
+            //winnersにあるものは除外
+            if(winners.indexOf(e)==-1){
+                drawingList.push(e);
+            }
         });
     }
 

@@ -28,18 +28,7 @@ function convertCSVtoArray(str,array){ // 読み込んだCSVデータが文字�
             array.push(tmp[i]); // 配列に要素として追加
         }
     }
-    /*
-    // 各行ごとにカンマで区切った文字列を要素とした二次元配列を生成
-    for(let i=0;i<tmp.length;++i){
-        let tmp2 = tmp[i].split(',');
-        for(let j=0;j<tmp2.length;++j){
-            let tmp3 = tmp2[j].replace(/\r/g,"");
-            if(tmp3 != ""){
-                array.push(tmp3);
-            }
-        }
-    }
-    */
+    
     console.log(array);
 }
 

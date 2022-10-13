@@ -113,7 +113,9 @@ function Select(){
     }
     this.mousePressed = function(){
         if(button3.mouseOver){
-            loadCsvData();
+            loadLotData();
+        }else if(button2.mouseOver){
+            loadWinnersData();
         }else if(button1.mouseOver){
             if(reg && students.length>0){
                 this.sceneManager.showScene( Roulette );
@@ -124,7 +126,7 @@ function Select(){
     }
 }
 
-async function loadCsvData(){
+async function loadLotData(){
     const file = await showOpenFileDialog();
     console.log(file);
     const content = await readAsText(file);
@@ -132,4 +134,12 @@ async function loadCsvData(){
     convertCSVtoArray(content,students);
     reg = true;
 };
+
+async function loadWinnersData(){
+    const file = await showOpenFileDialog();
+    console.log(file);
+    const content = await readAsText(file);
+    winners = []
+    convertCSVtoArray(content,winners);
+}
 
