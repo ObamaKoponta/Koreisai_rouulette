@@ -186,7 +186,7 @@ function Roulette()
             downloadWinners();
         }
         for(let i=0;i<5;i++){
-            if(keyCode == 49+i && !stopStep[i]){ //1~5キー
+            if(keyCode == 49+i && !stopStep[i] && !stopped){ //1~5キー
                 stopStep[i] = true;
                 zanzo = 10;
                 latestStopIndex = i;

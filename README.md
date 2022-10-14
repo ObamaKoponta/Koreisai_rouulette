@@ -1,5 +1,5 @@
 ## 概要
-抽選機 ver.0.9.0
+抽選機 ver.0.9.1
 [こちら](https://shibaken28.github.io/roulette-for-festival/)で動作しています．
 
 ## 使い方
@@ -36,6 +36,10 @@
 ### 未定義動作やバグ
 - 当選者の人数より抽選回数が上回ると未定義動作
 - 抽選対象者リストに重複があった場合，未定義動作
+
+### バージョン
+#### ver.0.9.1
+- 数字確定後に数字キーを押しても動作しないように
 
 ## 使用ライブラリ
 - This project use [p5.js](https://p5js.org/) and p5.js SceneManager.
