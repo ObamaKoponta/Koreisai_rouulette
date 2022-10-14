@@ -11,6 +11,7 @@ function preload()
 
 function setup()
 {
+    frameRate(60);
     let canvas = createCanvas(900,600,P2D);
     canvas.parent('canvas');
     var mgr = new SceneManager();

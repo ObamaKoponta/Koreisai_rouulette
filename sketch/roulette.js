@@ -8,6 +8,9 @@ function Roulette()
     let stopped = false;
     let special = false;
     let zanzo = 0;
+
+    let latestStopIndex = 0;
+    let stopStep = [false,false,false,false,false];
     
     let drawingList = [];
     
@@ -15,6 +18,7 @@ function Roulette()
         setDrawingList();
         selected="";
         special = false;
+        stopStep = [false,false,false,false,false];
     }
 
     this.draw = function()
@@ -23,10 +27,9 @@ function Roulette()
             setWinner();
         }
 
-        resizeCanvas(windowWidth-10, windowHeight-10);
         clear();
-        background(10);
-        cursorEffects();
+        background(20);
+        backgroundEffects();
         drawEffects();
         drawTitle();
         drawRoulette();
@@ -96,23 +99,58 @@ function Roulette()
             }  
             textAlign(CENTER,CENTER);
             textSize(luckyTextSize);
-
-            if(stopped){
-                if(zanzo>0){
-                    zanzo--;
-                    translate(width/2,luckyY);
-                    scale(1.0+zanzo*0.05);
-                    text(selected,0,0);
-                    scale(2.5-zanzo*0.2);
-                    stroke(255,255,10,zanzo*10);
-                    fill(230,230,10,zanzo*10);
-                    text(selected,0,0);
-                }else{
-                    text(selected,width/2,luckyY);
+            
+            //stepstopに1つでもtrueが入っているか
+            let step = 0;
+            for(let i=0;i<stopStep.length;i++){
+                if(stopStep[i]){
+                    step += 1;
+                }
+            }
+            if(step==5){
+                rouletteStop();
+            }
+            if(step>0){
+                for(let i=0;i<5;i++){
+                    let x = width/2-luckyTextSize*0.5*2.5+luckyTextSize*0.63*i;
+                    if(stopStep[i]){
+                        if(zanzo>0&&latestStopIndex==i){
+                            push();
+                            zanzo -=0.3;
+                            translate(x,luckyY);
+                            scale(1.0+zanzo*0.05);
+                            text(selected[i],0,0);
+                            scale(1.7-zanzo*0.1);
+                            stroke(255,255,10,zanzo*10);
+                            fill(230,230,10,zanzo*20);
+                            text(selected[i],0,0);
+                            pop();
+                        }else{
+                            text(selected[i],x,luckyY);
+                        }
+                    }else{
+                        let rand = Math.floor(Math.random()*10);
+                        text(rand,x,luckyY);
+                    }
                 }
             }else{
-                randomDraw = random(drawingList);
-                text(randomDraw,width/2,luckyY);
+                if(stopped){
+                    if(zanzo>0){
+                        zanzo -=0.3;
+                        translate(width/2,luckyY);
+                        scale(1.0+zanzo*0.05);
+                        text(selected,0,0);
+                        scale(1.7-zanzo*0.1);
+                        stroke(255,255,10,zanzo*10);
+                        fill(230,230,10,zanzo*20);
+                        text(selected,0,0);
+                    }else{
+                        text(selected,width/2,luckyY);
+                    }
+                }else{
+                    randomDraw = random(drawingList);
+                    text(randomDraw,width/2,luckyY);
+                }
             }
         pop();
     }
@@ -138,14 +176,21 @@ function Roulette()
         if(keyCode == 82){ //rキー
             rouletteStart();
         }
-        if(keyCode == 83){ //sキー
+        if(keyCode == 27){ //escキー
             this.sceneManager.showScene( Select );
         }
-        if(keyCode == 84){ //tキー
+        if(keyCode == 83){ //sキー
             special = !special;
         }
         if(keyCode == 68){ //dキー
             downloadWinners();
+        }
+        for(let i=0;i<5;i++){
+            if(keyCode == 49+i && !stopStep[i]){ //1~5キー
+                stopStep[i] = true;
+                zanzo = 10;
+                latestStopIndex = i;
+            }
         }
     }
 
@@ -153,10 +198,10 @@ function Roulette()
         selected = random(drawingList);
         drawingList.splice(drawingList.indexOf(selected),1);
         stopped = false;
-        console.log(drawingList);
     }
 
     function rouletteStop(){
+        stopStep = [false,false,false,false,false];
         if(!stopped){
             zanzo = 10;
             winners.push(selected);
@@ -165,7 +210,10 @@ function Roulette()
     }
 
     function rouletteStart(){
-        selected = "";
+        if(stopped){
+            selected = "";
+            stopStep = [false,false,false,false,false];
+        }
     }
 
     function downloadWinners(){//当選者一覧をダウンロードする
