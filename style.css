@@ -2,6 +2,10 @@ div {
   user-select: none /* 選択を禁止する */
 }
 
+body{
+  background-color: rgb(255, 237, 214);
+  font-family: 'Noto Sans JP', sans-serif;
+}
 
 html,body{
   overflow: hidden
@@ -20,3 +24,4 @@ html,body{
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
 }
+

@@ -1,7 +1,6 @@
 function Roulette()
 {
-    let titleY = 150;
-    let luckyY = 450;
+    let luckyY = height/2;
     let luckyTextSize = 256;
     let titleText = "工嶺祭抽選会";
     let selected = "";
@@ -28,18 +27,18 @@ function Roulette()
         }
 
         clear();
-        background(20);
-        backgroundEffects();
-        drawEffects();
+        background(255, 237, 214);//背景色
+        //backgroundEffects();
+        //drawEffects();
         drawTitle();
         drawRoulette();
     }
 
     function drawTitle(){
         textSize(128);
-        fill(255);
+        fill(0);
         push();
-            if(special){
+            /*if(special){
                 fill(255);
                 stroke(255,255,0);
                 strokeWeight(1);
@@ -63,13 +62,15 @@ function Roulette()
                 drawingContext.strokeStyle = gradientStroke;
                 drawingContext.fillStyle = gradientStroke;
             }
+            */
             textAlign(CENTER,CENTER);
-            text(titleText,width/2,titleY);
+            text(titleText,width/2,height/7);
         pop();
     }
 
     function drawRoulette(){
         push();
+            /*
             if(special){
                 fill(255);
                 stroke(255,255,0);
@@ -93,11 +94,11 @@ function Roulette()
                 }
                 drawingContext.strokeStyle = gradientStroke;
                 drawingContext.fillStyle = gradientStroke;
-            }else{
-                noStroke();
-                fill(230,230,10);
-            }  
+            */
+            noStroke();
+            fill(30,30,30);
             textAlign(CENTER,CENTER);
+            //位置は"let luckyY = y;"
             textSize(luckyTextSize);
             
             //stepstopに1つでもtrueが入っているか

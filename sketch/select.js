@@ -2,51 +2,24 @@
 
 function Select(){
     let button1,button2,button3;
-    let discription = 
-        "　事前設定\n"+
-        "・ 「登録」ボタンでCSVファイルを登録\n"+
-        "・ 抽選除外者がいる場合，「除外」ボタンでCSVファイルを登録\n"+
-        "\n"+
-        "　抽選画面\n"+
-        "・ Enterキーでルーレットストップ\n"+
-        "   ・ 5桁を1桁ずつストップするには数字キー「1,2,3,4,5」\n"+
-        "・ Rキーでルーレットスタート(Restart)\n"+
-        "・ Sキーで豪華抽選モードの切り替え(Special)\n"+
-        "・ Dキーで抽選結果をCSV形式でダウンロード(Download)\n"+
-        "・ Escapeキーでこの画面に戻る\n"+
-        "\n"+
-        "　注意など\n"+
-        "・ 画面の大きさはブラウザの拡大機能で調整してください\n"+
-        "・ GoogleChromeでの動作を想定しています\n"+
-        "・ リロードやページを離れると抽選データが消えます\n"+
-        "   ・ 当選者リストのダウンロードを活用してください\n"+
-        "\n"+
-        "その他詳しい仕様などはGitHubのリポジトリをご覧ください\n"+
-        "";
 
     this.enter = function()
     {
-        backgroundEffectsFirst();
-        button1 = new Button(width/5*4,100,250,100,"開始",false);
-        button2 = new Button(width/5*4,300,250,100,"除外",true);
-        button3 = new Button(width/5*4,500,250,100,"登録",true);
+        button1 = new Button(width/4*1,height/2,width/6,height/8,"開始",false);//x, y, w, h, text, e
+        button2 = new Button(width/4*2,height/2,width/6,height/8,"除外",true);
+        button3 = new Button(width/4*3,height/2,width/6,height/8,"登録",true);
     }
 
     this.draw = function(){
         button1.enabled = reg;
         clear();
         cursor(ARROW);
-        background(20);
-        backgroundEffects();
-        drawEffects();
-        textAlign(LEFT,TOP);
-        fill(230);
-        textSize(64);
-        text("わくわく抽選機",50,50);
-        textSize(30);
-        text("使い方",50,150);
-        textSize(16);
-        text(discription,70,200);
+        background(255, 237, 214);//背景色(""で囲うと16進数で書ける)
+        textAlign(CENTER,CENTER);//基準点の設定
+        fill(3,3,3);//文字の塗りつぶす色(strokeで枠線)
+        textSize(92);
+        textFont("Noto Sans JP");//フォントの呼び出し.あまり上位に書くとバグる(ライブラリ独自のもの)
+        text("工嶺祭抽選システム",width/2,height/7);//数字は位置(x,y)
         button1.draw();
         button1.update();
         button2.draw();

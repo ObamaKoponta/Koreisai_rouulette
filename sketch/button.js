@@ -18,26 +18,30 @@ class Button{
         if(!this.enabled){
             fill(100);
             strokeWeight(3);
-            rect(this.x-this.w/2,this.y-this.h/2,this.w,this.h,30);
+            rect(this.x-this.w/2,this.y-this.h/2,this.w,this.h,10);
             fill(10);
-            textSize(this.h);
+            textSize(86);//ボタン内テキストのサイズ
             noStroke();
             text(this.text,this.x,this.y);
         }else if(this.mouseOver){
-            fill(230,230,10);
-            let streach = 10;
+            fill(220,220,220);
+            let streach = 0;//ホバーするとデカくなるやつ
             strokeWeight(3);
-            rect(this.x-this.w/2-streach/2,this.y-this.h/2-streach/2,this.w+streach,this.h+streach,30);
-            noStroke();
-            textSize(this.h+streach);
+            rect(this.x-this.w/2-streach/2,this.y-this.h/2-streach/2,this.w+streach,this.h+streach,10);
+            noStroke();//テキストの枠線無し
+            textSize(86);//ボタン内テキストのサイズ
             fill(10);
             text(this.text,this.x,this.y);
         }else{
             fill(255);
             strokeWeight(3);
-            rect(this.x-this.w/2,this.y-this.h/2,this.w,this.h,30);
+            push();
+            drawingContext.shadowBlur = 20;//ぼかし具合
+            drawingContext.shadowColor = color(150, 150, 150);
+            rect(this.x-this.w/2,this.y-this.h/2,this.w,this.h,10);
+            pop();
             fill(10);
-            textSize(this.h);
+            textSize(86);//ボタン内テキストのサイズ
             noStroke();
             text(this.text,this.x,this.y);
         }
