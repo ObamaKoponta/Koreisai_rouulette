@@ -4,11 +4,6 @@ let winners = [];// 当選者一覧
 var goldenTexture;
 let reg = false;
 
-function preload()
-{
-    goldenTexture = loadImage("./img/gold.png");
-}
-
 function setup()
 {
     frameRate(60);
