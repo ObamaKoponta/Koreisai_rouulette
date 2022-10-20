@@ -27,7 +27,7 @@ function Roulette()
         }
 
         clear();
-        background(255, 237, 214);//背景色
+        background(255, 255, 255);//背景色
         //backgroundEffects();
         //drawEffects();
         drawTitle();
@@ -117,12 +117,12 @@ function Roulette()
                     if(stopStep[i]){
                         if(zanzo>0&&latestStopIndex==i){
                             push();
-                            zanzo -=0.3;
+                            zanzo -=0.3;//残像のアニメーション??
                             translate(x,luckyY);
                             scale(1.0+zanzo*0.05);
                             text(selected[i],0,0);
                             scale(1.7-zanzo*0.1);
-                            stroke(10,zanzo*10);//残像をなくす場合は"noStroke"
+                            noStroke(10,zanzo*10);//残像をなくす場合は"noStroke"
                             fill(10,zanzo*20);//rgba
                             text(selected[i],0,0);
                             pop();
@@ -189,7 +189,7 @@ function Roulette()
         for(let i=0;i<5;i++){
             if(keyCode == 49+i && !stopStep[i] && !stopped){ //1~5キー
                 stopStep[i] = true;
-                zanzo = 10;//10フレームかけて残像が出る(10or0のみ)
+                zanzo = 0;//10フレームかけて残像が出る(10or0のみ)
                 latestStopIndex = i;
             }
         }
@@ -204,7 +204,7 @@ function Roulette()
     function rouletteStop(){
         stopStep = [false,false,false,false,false];
         if(!stopped){
-            zanzo = 10;//10フレームかけて残像が出る(10or0のみ)
+            zanzo = 0;//10フレームかけて残像が出る(10or0のみ)
             winners.push(selected);
             stopped = true;
         }

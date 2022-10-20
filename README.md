@@ -1,5 +1,5 @@
 ## 概要
-抽選機 ver.0.9.3
+抽選機 ver.1.0.0
 [こちら](https://obamakoponta.github.io/Koreisai_rouulette/)で動作しています．
 
 ## 使い方
@@ -15,6 +15,7 @@
 - Rキーでルーレットスタート(Restart)
 - Dキーで抽選結果をCSV形式でダウンロード(Download)
 - Escapeキーで設定画面に戻る
+- 1.0.0にてアニメーションを削除しました
 
 ### 注意
 - GoogleChromeでの動作を想定しています
@@ -42,6 +43,9 @@
 ### バージョン
 #### ver.0.9.1
 - 数字確定後に数字キーを押しても動作しないように
+#### ver.1.0.0
+- アニメーションを削除しました
+- 背景色を白にしました
 
 ## 使用ライブラリ
 - This project use [p5.js](https://p5js.org/) and p5.js SceneManager.

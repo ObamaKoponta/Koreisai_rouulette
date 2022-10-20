@@ -14,7 +14,7 @@ function Select(){
         button1.enabled = reg;
         clear();
         cursor(ARROW);
-        background(255, 237, 214);//背景色(""で囲うと16進数で書ける)
+        background(255, 255, 255);//背景色(""で囲うと16進数で書ける)
         textAlign(CENTER,CENTER);//基準点の設定
         fill(3,3,3);//文字の塗りつぶす色(strokeで枠線)
         textSize(92);
